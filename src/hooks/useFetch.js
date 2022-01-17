@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios';
-import useLocalStorage from 'hooks/useLocalStorage';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 export default url => {
   const baseUrl = 'https://api.realworld.io/api';

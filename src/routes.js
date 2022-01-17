@@ -1,10 +1,10 @@
 import React from 'react';
 import {Routes, Route} from 'react-router-dom';
-import GlobalFeed from 'pages/globalFeed';
-import Authentication from 'pages/authentication';
-import Article from 'pages/article';
+import GlobalFeed from './pages/globalFeed'
+import Authentication from './pages/authentication';
+import Article from './pages/article';
 
-export default () => {
+const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<GlobalFeed/>} />
@@ -14,3 +14,5 @@ export default () => {
     </Routes>
   )
 }
+
+export default AppRoutes;

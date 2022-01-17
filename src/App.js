@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import Routes from 'routes';
-import TopBar from 'components/topBar';
-import { CurrentUserProvider } from 'contexts/currentUser';
-import CurrentUserChecker from 'components/currentUserChecker';
+import AppRoutes from './routes';
+import TopBar from './components/topBar';
+import { CurrentUserProvider } from './contexts/currentUser';
+import CurrentUserChecker from './components/currentUserChecker';
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
       <CurrentUserChecker>
         <BrowserRouter>
           <TopBar />
-          <Routes />
+          <AppRoutes />
         </BrowserRouter>
       </CurrentUserChecker>
     </CurrentUserProvider>

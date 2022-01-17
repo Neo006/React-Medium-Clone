@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const BackendErrorMessages = ({backendErrors}) => {
   const errorMessages = Object.keys(backendErrors).map(name => {
@@ -14,5 +15,10 @@ const BackendErrorMessages = ({backendErrors}) => {
     </ul>
   )
 }
+
+BackendErrorMessages.propTypes = {
+  backendErrors: PropTypes.node.isRequired,
+};
+
 
 export default BackendErrorMessages;

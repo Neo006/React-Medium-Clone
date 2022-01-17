@@ -1,10 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Link, Navigate } from 'react-router-dom';
-import useFetch from 'hooks/useFetch';
-import useLocalStorage from 'hooks/useLocalStorage';
-import { useLocation } from 'react-router-dom';
-import { CurrentUserContext } from 'contexts/currentUser';
-import BackendErrorMessages from 'pages/authentication/components/backendErrorMessages';
+import { Link, Navigate, useLocation } from 'react-router-dom';
+import useFetch from '../../hooks/useFetch';
+import useLocalStorage from '../../hooks/useLocalStorage';
+import { CurrentUserContext } from '../../contexts/currentUser';
+import BackendErrorMessages from './components/backendErrorMessages';
 
 const Authentication = () => {
   const location = useLocation();
@@ -19,8 +18,8 @@ const Authentication = () => {
   const [username, setUsername] = useState('');
   const [isSuccessfullSubmit, setIsSuccessfullSubmit] = useState(false);
   const [{isLoading, response, error}, doFetch] = useFetch(apiUrl);
-  const [token, setToken] = useLocalStorage('token');
-  const [currentUserState, setCurrentUserState] = useContext(CurrentUserContext);
+  const [, setToken] = useLocalStorage('token');
+  const [, setCurrentUserState] = useContext(CurrentUserContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();
