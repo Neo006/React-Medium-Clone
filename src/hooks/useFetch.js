@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import useLocalStorage from '../hooks/useLocalStorage';
 
-export default url => {
+export default (url) => {
   const baseUrl = 'https://api.realworld.io/api';
   const [isLoading, setIsLoading] = useState(false);
   const [response, setResponse] = useState(null);
@@ -10,31 +10,33 @@ export default url => {
   const [options, setOptions] = useState({});
   const [token] = useLocalStorage('token');
 
-  const doFetch = (options = {}) => {
+  const doFetch = useCallback((options = {}) => {
     setOptions(options);
     setIsLoading(true);
-  }
+  }, []);
 
   useEffect(() => {
     const requestOptions = {
       ...options,
       ...{
         headers: {
-          authorization: token ? `Token ${token}` : ''
-        }
-      }
+          authorization: token ? `Token ${token}` : '',
+        },
+      },
+    };
+    if (!isLoading) {
+      return;
     }
-    if(!isLoading) {
-      return
-    }
-    axios(baseUrl + url, requestOptions).then(res => {
-      setResponse(res.data);
-      setIsLoading(false);
-    }).catch(error => {
-      setError(error.response.data)
-      setIsLoading(false);
-    })
-  }, [isLoading, options, url])
+    axios(baseUrl + url, requestOptions)
+      .then((res) => {
+        setResponse(res.data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setError(error.response.data);
+        setIsLoading(false);
+      });
+  }, [isLoading, options, url]);
 
-  return [{isLoading, response, error}, doFetch]
-}
+  return [{ isLoading, response, error }, doFetch];
+};
