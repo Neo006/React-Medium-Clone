@@ -1,14 +1,15 @@
-import React, { useEffect } from "react";
-import Feed from "../../components/feed";
-import Pagination from "../../components/pagination";
-import useFetch from "../../hooks/useFetch";
-import { getPaginator } from "../../utils";
-import { useLocation } from "react-router-dom";
-import { stringify } from "query-string";
-import { limit } from "../../utils";
-import PopularTags from "../../components/popularTags";
-import Loading from "../../components/loading";
-import ErrorMessage from "../../components/errorMessage";
+import React, { useEffect } from 'react';
+import Feed from '../../components/feed';
+import Pagination from '../../components/pagination';
+import useFetch from '../../hooks/useFetch';
+import { getPaginator } from '../../utils';
+import { useLocation } from 'react-router-dom';
+import { stringify } from 'query-string';
+import { limit } from '../../utils';
+import PopularTags from '../../components/popularTags';
+import Loading from '../../components/loading';
+import ErrorMessage from '../../components/errorMessage';
+import FeedToggler from '../../components/feedToggler';
 
 const GlobalFeed = () => {
   const location = useLocation();
@@ -35,6 +36,7 @@ const GlobalFeed = () => {
       <div className="container page">
         <div className="row">
           <div className="col-md-9">
+            <FeedToggler />
             {isLoading && <Loading />}
             {error && <ErrorMessage />}
             {!isLoading && response && (
