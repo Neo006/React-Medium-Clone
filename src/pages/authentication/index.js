@@ -17,85 +17,76 @@ const Authentication = () => {
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
   const [isSuccessfullSubmit, setIsSuccessfullSubmit] = useState(false);
-  const [{isLoading, response, error}, doFetch] = useFetch(apiUrl);
+  const [{ isLoading, response, error }, doFetch] = useFetch(apiUrl);
   const [, setToken] = useLocalStorage('token');
-  const [, setCurrentUserState] = useContext(CurrentUserContext);
+  const [, dispatch] = useContext(CurrentUserContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const formData = isLogin ? {email, password} : {username, email, password};
+    const formData = isLogin ? { email, password } : { username, email, password };
     doFetch({
       method: 'post',
       data: {
-        user: formData
-      }
+        user: formData,
+      },
     });
-  }
+  };
 
   useEffect(() => {
-    if(!response) {
-      return
+    if (!response) {
+      return;
     }
     setToken(response.user.token);
     setIsSuccessfullSubmit(true);
-    setCurrentUserState(state => ({
-      ...state,
-      isLoggedIn: true,
-      isLoading: false,
-      currentUser: response.user  
-    }))
-  }, [response, setToken])
+    dispatch({ type: 'SET_AUTHORIZED', payload: response.user });
+  }, [response, setToken, dispatch]);
 
-  if(isSuccessfullSubmit) {
-    return <Navigate to="/" />
+  if (isSuccessfullSubmit) {
+    return <Navigate to="/" />;
   }
 
   return (
-    <div className='auth-page'>
-      <div className='container page'>
-        <div className='row'>
-          <div className='col-md-6 offset-md-3 col-xs-12'>
-            <h1 className='text-xs-center'>{pageTitle}</h1>
-            <p className='text-xs-center'>
+    <div className="auth-page">
+      <div className="container page">
+        <div className="row">
+          <div className="col-md-6 offset-md-3 col-xs-12">
+            <h1 className="text-xs-center">{pageTitle}</h1>
+            <p className="text-xs-center">
               <Link to={descriptionLink}>{descriptionText}</Link>
             </p>
             <form onSubmit={handleSubmit}>
               {error && <BackendErrorMessages backendErrors={error.errors} />}
               <fieldset>
                 {!isLogin && (
-                  <fieldset className='form-group'>
-                    <input 
-                      type='text' 
-                      className='form-control form-control-lg' 
-                      placeholder='Username'
+                  <fieldset className="form-group">
+                    <input
+                      type="text"
+                      className="form-control form-control-lg"
+                      placeholder="Username"
                       value={username}
-                      onChange={e => setUsername(e.target.value)} 
+                      onChange={(e) => setUsername(e.target.value)}
                     />
                   </fieldset>
                 )}
-                <fieldset className='form-group'>
-                  <input 
-                    type='email' 
-                    className='form-control form-control-lg' 
-                    placeholder='Email'
+                <fieldset className="form-group">
+                  <input
+                    type="email"
+                    className="form-control form-control-lg"
+                    placeholder="Email"
                     value={email}
-                    onChange={e => setEmail(e.target.value)} 
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </fieldset>
-                <fieldset className='form-group'>
-                  <input 
-                    type='password' 
-                    className='form-control form-control-lg' 
-                    placeholder='Password'
-                    value={password} 
-                    onChange={e => setPassword(e.target.value)}
+                <fieldset className="form-group">
+                  <input
+                    type="password"
+                    className="form-control form-control-lg"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </fieldset>
-                <button 
-                  disabled={isLoading} 
-                  className='btn btn-lg btn-primary pull-xs-right' 
-                  type='submit'
-                >
+                <button disabled={isLoading} className="btn btn-lg btn-primary pull-xs-right" type="submit">
                   {pageTitle}
                 </button>
               </fieldset>
@@ -104,7 +95,7 @@ const Authentication = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Authentication;
