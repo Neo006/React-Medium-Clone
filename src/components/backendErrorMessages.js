@@ -17,7 +17,7 @@ const BackendErrorMessages = ({backendErrors}) => {
 }
 
 BackendErrorMessages.propTypes = {
-  backendErrors: PropTypes.node.isRequired,
+  backendErrors: PropTypes.object.isRequired,
 };
 
 

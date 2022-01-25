@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import BackendErrorMessages from "./backendErrorMessages";
 
 const ArticleForm = ({ errors, initialValues, onSubmit }) => {
   const [title, setTitle] = useState("");
@@ -9,16 +10,31 @@ const ArticleForm = ({ errors, initialValues, onSubmit }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onSubmit({ foo: "foo" });
-    console.log(errors, initialValues, title, body, description, tagList);
+    const article = {
+      title,
+      body,
+      description,
+      tagList,
+    };
+    onSubmit(article);
   };
+
+  useEffect(() => {
+    if (!initialValues) {
+      return;
+    }
+    setTitle(initialValues.title);
+    setBody(initialValues.body);
+    setDescription(initialValues.description);
+    setTagList(initialValues.tagList.join(" "));
+  }, [initialValues]);
 
   return (
     <div className="editor-page">
       <div className="container page">
         <div className="row">
           <div className="col-md-10 offset-md-1 col-xs-12">
-            BackendErrorMessages
+            {errors && <BackendErrorMessages backendErrors={errors} />}
             <form onSubmit={handleSubmit}>
               <fieldset>
                 <fieldset className="form-group">
