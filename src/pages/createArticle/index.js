@@ -6,7 +6,7 @@ import { CurrentUserContext } from "../../contexts/currentUser";
 
 const CreateArticle = () => {
   const apiUrl = "/articles";
-  const [{ response, error }, doFetch] = useFetch(apiUrl);
+  const [{ response, isLoading, error }, doFetch] = useFetch(apiUrl);
   const initialValues = {
     title: "",
     body: "",
@@ -45,6 +45,7 @@ const CreateArticle = () => {
       <ArticleForm
         errors={(error && error.errors) || {}}
         initialValues={initialValues}
+        isLoading={isLoading}
         onSubmit={handleSubmit}
       />
     </div>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import BackendErrorMessages from "./backendErrorMessages";
 
-const ArticleForm = ({ errors, initialValues, onSubmit }) => {
+const ArticleForm = ({ errors, initialValues, isLoading, onSubmit }) => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [description, setDescription] = useState("");
@@ -75,6 +75,7 @@ const ArticleForm = ({ errors, initialValues, onSubmit }) => {
                 </fieldset>
                 <fieldset className="form-group">
                   <button
+                    disabled={isLoading}
                     type="submit"
                     className="btn btn-lg pull-xs-right btn-primary"
                   >
@@ -93,6 +94,7 @@ const ArticleForm = ({ errors, initialValues, onSubmit }) => {
 ArticleForm.propTypes = {
   errors: PropTypes.object,
   initialValues: PropTypes.object,
+  isLoading: PropTypes.bool,
   onSubmit: PropTypes.func.isRequired,
 };
 
