@@ -70,7 +70,7 @@ const Authentication = () => {
                 )}
                 <fieldset className="form-group">
                   <input
-                    type="email"
+                    type="text"
                     className="form-control form-control-lg"
                     placeholder="Email"
                     value={email}
