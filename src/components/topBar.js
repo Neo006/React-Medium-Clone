@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
-import { Link, NavLink } from "react-router-dom";
-import { CurrentUserContext } from "../contexts/currentUser";
+import React, { useContext } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import { CurrentUserContext } from '../contexts/currentUser';
 
 const TopBar = () => {
   const [currentUserState] = useContext(CurrentUserContext);
@@ -46,15 +46,8 @@ const TopBar = () => {
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink
-                  to={`/profile/${currentUserState.currentUser.username}`}
-                  className="nav-link"
-                >
-                  <img
-                    className="user-pic"
-                    src={currentUserState.currentUser.image}
-                    alt=""
-                  />
+                <NavLink to={`/profiles/${currentUserState.currentUser.username}`} className="nav-link">
+                  <img className="user-pic" src={currentUserState.currentUser.image} alt="" />
                   &nbsp; {currentUserState.currentUser.username}
                 </NavLink>
               </li>
