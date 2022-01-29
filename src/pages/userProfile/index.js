@@ -2,10 +2,12 @@ import React from 'react';
 import { useParams, useLocation, NavLink } from 'react-router-dom';
 import { useEffect } from 'react/cjs/react.development';
 import useFetch from '../../hooks/useFetch';
+import UserArticles from './components/userArticles';
 
 const UserProfile = () => {
   const { slug } = useParams();
-  const isFavorites = useLocation().pathname.includes('favorites');
+  const location = useLocation();
+  const isFavorites = location.pathname.includes('favorites');
   const apiUrl = `/profiles/${slug}`;
   const [{ response }, doFetch] = useFetch(apiUrl);
 
@@ -16,8 +18,6 @@ const UserProfile = () => {
   if (!response) {
     return null;
   }
-
-  console.log(isFavorites);
 
   return (
     <div className="profile-page">
@@ -49,7 +49,12 @@ const UserProfile = () => {
                 </li>
               </ul>
             </div>
-            User Articles
+            <UserArticles
+              username={response.profile.username}
+              location={location}
+              isFavorites={isFavorites}
+              url={location.pathname}
+            />
           </div>
         </div>
       </div>
