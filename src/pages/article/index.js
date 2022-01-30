@@ -12,7 +12,7 @@ const Article = () => {
   const apiUrl = `/articles/${slug}`;
   const [{ response: fetchArticleResponse, isLoading: fetchArticleIsLoading, error: fetchArticleError }, doFetch] =
     useFetch(apiUrl);
-  const [{ response: deleteArticleResponse }, doDeleteArticle] = useFetch(apiUrl);
+  const [{ responseStatus: deleteArticleResponseStatus }, doDeleteArticle] = useFetch(apiUrl);
   const [currenUserState] = useContext(CurrentUserContext);
   const [isSuccessfullDelete, setIsSuccessfullDelete] = useState(false);
 
@@ -34,11 +34,11 @@ const Article = () => {
   }, [doFetch]);
 
   useEffect(() => {
-    if (!deleteArticleResponse) {
+    if (!deleteArticleResponseStatus) {
       return;
     }
     setIsSuccessfullDelete(true);
-  }, [deleteArticleResponse]);
+  }, [deleteArticleResponseStatus]);
 
   if (isSuccessfullDelete) {
     return <Navigate to="/" />;

@@ -6,6 +6,7 @@ export default (url) => {
   const baseUrl = 'https://api.realworld.io/api';
   const [isLoading, setIsLoading] = useState(false);
   const [response, setResponse] = useState(null);
+  const [responseStatus, setResponseStatus] = useState(null);
   const [error, setError] = useState(null);
   const [options, setOptions] = useState({});
   const [token] = useLocalStorage('token');
@@ -33,6 +34,7 @@ export default (url) => {
       .then((res) => {
         if (!skipGetResponseAfterDestroy) {
           setResponse(res.data);
+          setResponseStatus(res.status);
           setIsLoading(false);
         }
       })
@@ -48,5 +50,5 @@ export default (url) => {
     };
   }, [isLoading, options, url]);
 
-  return [{ isLoading, response, error }, doFetch];
+  return [{ isLoading, response, error, responseStatus }, doFetch];
 };
