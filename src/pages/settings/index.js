@@ -1,28 +1,28 @@
-import React, { useContext, useState } from "react";
-import { Navigate } from "react-router-dom";
-import useFetch from "../../hooks/useFetch";
-import { CurrentUserContext } from "../../contexts/currentUser";
-import BackendErrorMessages from "../../components/backendErrorMessages";
-import { useEffect } from "react/cjs/react.development";
-import useLocalStorage from "../../hooks/useLocalStorage";
+import React, { useContext, useState } from 'react';
+import { Navigate } from 'react-router-dom';
+import useFetch from '../../hooks/useFetch';
+import { CurrentUserContext } from '../../contexts/currentUser';
+import BackendErrorMessages from '../../components/backendErrorMessages';
+import { useEffect } from 'react/cjs/react.development';
+import useLocalStorage from '../../hooks/useLocalStorage';
 
 const Settings = () => {
   const [currentUserState, dispatch] = useContext(CurrentUserContext);
-  const apiUrl = "/user";
+  const apiUrl = '/user';
   const [{ response, error }, doFetch] = useFetch(apiUrl);
-  const [image, setImage] = useState("");
-  const [username, setUsername] = useState("");
-  const [bio, setBio] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [, setToken] = useLocalStorage("token");
+  const [image, setImage] = useState('');
+  const [username, setUsername] = useState('');
+  const [bio, setBio] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [, setToken] = useLocalStorage('token');
   const [isSuccessfullLogout, setIsSuccessfullLogout] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     doFetch({
-      method: "put",
+      method: 'put',
       data: {
         user: {
           ...currentUserState.currentUser,
@@ -38,8 +38,8 @@ const Settings = () => {
 
   const logout = (event) => {
     event.preventDefault();
-    setToken("");
-    dispatch({ type: "LOGOUT" });
+    setToken('');
+    dispatch({ type: 'LOGOUT' });
     setIsSuccessfullLogout(true);
   };
 
@@ -59,7 +59,7 @@ const Settings = () => {
       return;
     }
 
-    dispatch({ type: "SET_AUTHORIZED", payload: response.user });
+    dispatch({ type: 'SET_AUTHORIZED', payload: response.user });
   }, [response]);
 
   if (isSuccessfullLogout) {
@@ -98,7 +98,7 @@ const Settings = () => {
                     className="form-control form-control-lg"
                     rows="8"
                     placeholder="Short bio about you"
-                    value={bio}
+                    value={bio || ''}
                     onChange={(e) => setBio(e.target.value)}
                   ></textarea>
                 </fieldset>
@@ -120,10 +120,7 @@ const Settings = () => {
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </fieldset>
-                <button
-                  type="submit"
-                  className="btn btn-lg btn-primary pull-xs-right"
-                >
+                <button type="submit" className="btn btn-lg btn-primary pull-xs-right">
                   Update Settings
                 </button>
               </fieldset>
