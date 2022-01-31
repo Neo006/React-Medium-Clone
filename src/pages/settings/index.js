@@ -1,9 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import useFetch from '../../hooks/useFetch';
 import { CurrentUserContext } from '../../contexts/currentUser';
 import BackendErrorMessages from '../../components/backendErrorMessages';
-import { useEffect } from 'react/cjs/react.development';
 import useLocalStorage from '../../hooks/useLocalStorage';
 
 const Settings = () => {

@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams, useLocation, NavLink } from 'react-router-dom';
-import { useEffect } from 'react/cjs/react.development';
 import useFetch from '../../hooks/useFetch';
 import UserArticles from './components/userArticles';
 
