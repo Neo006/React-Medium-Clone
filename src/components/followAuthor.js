@@ -26,7 +26,7 @@ const FollowAuthor = ({ authorUsername, isFollowing }) => {
     <button className={buttonClasses} style={{ marginRight: '10px' }} onClick={follow}>
       <i className="ion-plus-round"></i>
       &nbsp; {buttonText}
-      {authorUsername}
+      &nbsp; {authorUsername}
     </button>
   );
 };

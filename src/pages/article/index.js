@@ -8,6 +8,7 @@ import TagList from '../../components/tagList';
 import { CurrentUserContext } from '../../contexts/currentUser';
 import AddToFavorites from '../../components/addToFavorites';
 import FollowAuthor from '../../components/followAuthor';
+import CommentCard from '../../components/commentCard';
 
 const Article = () => {
   const { slug } = useParams();
@@ -99,14 +100,22 @@ const Article = () => {
         {fetchArticleIsLoading && <Loading />}
         {fetchArticleError && <ErrorMessage />}
         {!fetchArticleIsLoading && fetchArticleResponse && (
-          <div className="row article-content">
-            <div className="col-xs-12">
-              <div>
-                <p>{fetchArticleResponse.article.body}</p>
+          <>
+            <div className="row article-content">
+              <div className="col-xs-12">
+                <div>
+                  <p>{fetchArticleResponse.article.body}</p>
+                </div>
+                <TagList tags={fetchArticleResponse.article.tagList} />
               </div>
-              <TagList tags={fetchArticleResponse.article.tagList} />
             </div>
-          </div>
+            <hr/>
+            <div className="row">
+              <div className="col-xs-12 col-md-8 offset-md-2">
+                <CommentCard slug={slug} currenUserState={currenUserState} />
+              </div>
+            </div>
+          </>
         )}
       </div>
     </div>
