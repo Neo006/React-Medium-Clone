@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react';
-import { useParams, useLocation, NavLink } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react';
+import { useParams, useLocation, NavLink, Link } from 'react-router-dom';
+import FollowAuthor from '../../components/followAuthor';
 import useFetch from '../../hooks/useFetch';
 import UserArticles from './components/userArticles';
+import { CurrentUserContext } from '../../contexts/currentUser';
 
 const UserProfile = () => {
   const { slug } = useParams();
@@ -9,6 +11,14 @@ const UserProfile = () => {
   const isFavorites = location.pathname.includes('favorites');
   const apiUrl = `/profiles/${slug}`;
   const [{ response }, doFetch] = useFetch(apiUrl);
+  const [currenUserState] = useContext(CurrentUserContext);
+
+  const isAuthor = () => {
+    if (!response || !currenUserState.isLoggedIn) {
+      return false;
+    }
+    return response.profile.username === currenUserState.currentUser.username;
+  };
 
   useEffect(() => {
     doFetch();
@@ -27,6 +37,18 @@ const UserProfile = () => {
               <img className="user-img" alt="" src={response.profile.image} />
               <h4>{response.profile.username}</h4>
               <p>{response.profile.bio}</p>
+              {isAuthor() && (
+                <Link to="/settings" className="btn btn-sm btn-outline-secondary action-btn">
+                  <i className="ion-gear-a"></i>
+                  &nbsp;Edit Profile Settings
+                </Link>
+              )}
+              {!isAuthor() && (
+                <FollowAuthor
+                  authorUsername={response.profile.username}
+                  isFollowing={response.profile.following}
+                />
+              )}
             </div>
           </div>
         </div>
