@@ -8,7 +8,7 @@ import TagList from '../../components/tagList';
 import { CurrentUserContext } from '../../contexts/currentUser';
 import AddToFavorites from '../../components/addToFavorites';
 import FollowAuthor from '../../components/followAuthor';
-import CommentCard from '../../components/commentCard';
+import Comments from '../../components/comments';
 
 const Article = () => {
   const { slug } = useParams();
@@ -112,7 +112,7 @@ const Article = () => {
             <hr/>
             <div className="row">
               <div className="col-xs-12 col-md-8 offset-md-2">
-                <CommentCard slug={slug} currenUserState={currenUserState} />
+                <Comments />
               </div>
             </div>
           </>
