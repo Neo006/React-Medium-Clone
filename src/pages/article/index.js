@@ -9,15 +9,22 @@ import { CurrentUserContext } from '../../contexts/currentUser';
 import AddToFavorites from '../../components/addToFavorites';
 import FollowAuthor from '../../components/followAuthor';
 import Comments from '../../components/comments';
+import dateFormat from 'dateformat';
 
 const Article = () => {
   const { slug } = useParams();
   const apiUrl = `/articles/${slug}`;
-  const [{ response: fetchArticleResponse, isLoading: fetchArticleIsLoading, error: fetchArticleError }, doFetch] =
-    useFetch(apiUrl);
+  const [{ response: fetchArticleResponse, isLoading: fetchArticleIsLoading, error: fetchArticleError }, doFetch] = useFetch(apiUrl);
   const [{ responseStatus: deleteArticleResponseStatus }, doDeleteArticle] = useFetch(apiUrl);
   const [currenUserState] = useContext(CurrentUserContext);
   const [isSuccessfullDelete, setIsSuccessfullDelete] = useState(false);
+
+  const getDate = (createDate) => {
+    const date = new Date(createDate);
+    const changeDateFormat = dateFormat(date, "mmmm d, yyyy");
+
+    return changeDateFormat;
+  };
 
   const isAuthor = () => {
     if (!fetchArticleResponse || !currenUserState.isLoggedIn) {
@@ -61,7 +68,7 @@ const Article = () => {
                 <Link to={`/profiles/${fetchArticleResponse.article.author.username}`}>
                   {fetchArticleResponse.article.author.username}
                 </Link>
-                <span className="date">{fetchArticleResponse.article.createdAt}</span>
+                <span className="date">{getDate(fetchArticleResponse.article.createdAt)}</span>
               </div>
               {isAuthor() && (
                 <span>
