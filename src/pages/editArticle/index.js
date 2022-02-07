@@ -1,9 +1,8 @@
-import React, { useEffect, useState, useContext } from "react";
-import ArticleForm from "../../components/articleForm";
-import { useParams } from "react-router-dom";
-import useFetch from "../../hooks/useFetch";
-import { Navigate } from "react-router-dom";
-import { CurrentUserContext } from "../../contexts/currentUser";
+import React, { useEffect, useState } from 'react';
+import ArticleForm from '../../components/articleForm';
+import { useParams } from 'react-router-dom';
+import useFetch from '../../hooks/useFetch';
+import { Navigate } from 'react-router-dom';
 
 const EditArticle = () => {
   const { slug } = useParams();
@@ -15,11 +14,10 @@ const EditArticle = () => {
   ] = useFetch(apiUrl);
   const [initialValues, setInitialValues] = useState(null);
   const [isSuccessfullSubmit, setIsSuccessfullSubmit] = useState(false);
-  const [currentUserState] = useContext(CurrentUserContext);
 
   const handleSubmit = (article) => {
     doUpdateArticle({
-      method: "put",
+      method: 'put',
       data: {
         article,
       },
@@ -49,10 +47,6 @@ const EditArticle = () => {
     }
     setIsSuccessfullSubmit(true);
   }, [updateArticleResponse]);
-
-  if (currentUserState.isLoggedIn === false) {
-    return <Navigate to="/" />;
-  }
 
   if (isSuccessfullSubmit) {
     return <Navigate to={`/articles/${updateArticleResponse.article.slug}`} />;

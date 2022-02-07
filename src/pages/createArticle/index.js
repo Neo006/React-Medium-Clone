@@ -1,24 +1,22 @@
-import React, { useContext, useEffect, useState } from "react";
-import ArticleForm from "../../components/articleForm";
-import useFetch from "../../hooks/useFetch";
-import { Navigate } from "react-router-dom";
-import { CurrentUserContext } from "../../contexts/currentUser";
+import React, { useEffect, useState } from 'react';
+import ArticleForm from '../../components/articleForm';
+import useFetch from '../../hooks/useFetch';
+import { Navigate } from 'react-router-dom';
 
 const CreateArticle = () => {
-  const apiUrl = "/articles";
+  const apiUrl = '/articles';
   const [{ response, isLoading, error }, doFetch] = useFetch(apiUrl);
   const initialValues = {
-    title: "",
-    body: "",
-    description: "",
+    title: '',
+    body: '',
+    description: '',
     tagList: [],
   };
   const [isSuccessfullSubmit, setIsSuccessfullSubmit] = useState(false);
-  const [currentUserState] = useContext(CurrentUserContext);
 
   const handleSubmit = (article) => {
     doFetch({
-      method: "post",
+      method: 'post',
       data: {
         article,
       },
@@ -31,10 +29,6 @@ const CreateArticle = () => {
     }
     setIsSuccessfullSubmit(true);
   }, [response]);
-
-  if (currentUserState.isLoggedIn === false) {
-    return <Navigate to="/" />;
-  }
 
   if (isSuccessfullSubmit && response) {
     return <Navigate to={`/articles/${response.article.slug}`} />;

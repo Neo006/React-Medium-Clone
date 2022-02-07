@@ -1,5 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import ProtectedRoute from './hoc/protectedRoute';
 import GlobalFeed from './pages/globalFeed';
 import Authentication from './pages/authentication';
 import Article from './pages/article';
@@ -14,16 +15,58 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<GlobalFeed />} />
-      <Route path="/profiles/:slug" element={<UserProfile />} />
-      <Route path="/profiles/:slug/favorites" element={<UserProfile />} />
-      <Route path="/articles/new" element={<CreateArticle />} />
+      <Route
+        path="/profiles/:slug"
+        element={
+          <ProtectedRoute>
+            <UserProfile />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/profiles/:slug/favorites"
+        element={
+          <ProtectedRoute>
+            <UserProfile />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/articles/new"
+        element={
+          <ProtectedRoute>
+            <CreateArticle />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/feed"
+        element={
+          <ProtectedRoute>
+            <YourFeed />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/articles/:slug"
+        element={
+          <ProtectedRoute>
+            <Article />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/articles/:slug/edit"
+        element={
+          <ProtectedRoute>
+            <EditArticle />
+          </ProtectedRoute>
+        }
+      />
       <Route path="/settings" element={<Settings />} />
-      <Route path="/articles/:slug/edit" element={<EditArticle />} />
-      <Route path="/feed" element={<YourFeed />} />
       <Route path="/tags/:slug" element={<TagFeed />} />
       <Route path="/login" element={<Authentication />} />
       <Route path="/register" element={<Authentication />} />
-      <Route path="/articles/:slug" element={<Article />} />
     </Routes>
   );
 };
