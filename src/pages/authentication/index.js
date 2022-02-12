@@ -41,6 +41,12 @@ const Authentication = () => {
     dispatch({ type: 'SET_AUTHORIZED', payload: response.user });
   }, [response, setToken, dispatch]);
 
+  useEffect(() => {
+    setEmail('');
+    setPassword('');
+    setUsername('');
+  }, [isLogin]);
+
   if (isSuccessfullSubmit) {
     return <Navigate to="/" />;
   }
