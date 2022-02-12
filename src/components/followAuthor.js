@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import useFetch from '../hooks/useFetch';
 import classNames from 'classnames';
+import { CurrentUserContext } from '../contexts/currentUser';
+import { useNavigate } from 'react-router-dom';
 
 const FollowAuthor = ({ authorUsername, isFollowing }) => {
   const followApiUrl = `/profiles/${authorUsername}/follow`;
@@ -15,8 +17,14 @@ const FollowAuthor = ({ authorUsername, isFollowing }) => {
     'btn-secondary': isFollowingWithResponse,
     'btn-outline-secondary': !isFollowingWithResponse,
   });
+  const [currentUserState] = useContext(CurrentUserContext);
+  const navigate = useNavigate();
 
   const follow = () => {
+    if (!currentUserState.isLoggedIn) {
+      navigate("/login", { replace: true });
+    }
+    
     doFetch({
       method: isFollowingWithResponse ? 'delete' : 'post',
     });

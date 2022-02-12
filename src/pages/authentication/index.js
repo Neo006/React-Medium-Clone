@@ -48,7 +48,10 @@ const Authentication = () => {
   }, [isLogin]);
 
   if (isSuccessfullSubmit) {
-    return <Navigate to="/" />;
+    const state = location.state;
+    const from = state ? state.from.pathname : '/';
+
+    return <Navigate to={from} />;
   }
 
   return (

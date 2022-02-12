@@ -61,7 +61,7 @@ const Settings = () => {
     dispatch({ type: 'SET_AUTHORIZED', payload: response.user });
   }, [response]);
 
-  if (!currentUserState.isLoggedIn) {
+  if (!currentUserState.isLoggedIn && currentUserState.isLoggedIn !== null) {
     return <Navigate to="/" />;
   }
 
